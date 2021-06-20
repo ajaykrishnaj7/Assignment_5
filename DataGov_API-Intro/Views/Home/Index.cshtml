@@ -8,6 +8,7 @@
 
 @foreach (DataGov_API_Intro.Models.Park park in Model.data)
 {
-  @(park.parkCode + " " + park.fullName + " " + park.latLong)
-  <br />
+<p>
+    @(park.parkCode + " " + park.fullName + " " + park.latLong)
+</p>
 }

@@ -12,10 +12,10 @@ namespace DataGov_API_Intro.Controllers
     {
         HttpClient httpClient;
 
-        //static string BASE_URL = "https://developer.nps.gov/api/v1/";
+        static string BASE_URL = "https://developer.nps.gov/api/v1";
         static string API_KEY = "mdBybOievMdeX3eYSC0MhFu3U7xRV18xHAPG04qb"; //Add your API key here inside ""
 
-        static string BASE_URL = "https://data.cdc.gov/api/views/hk9y-quqm/rows.json";
+        //static string BASE_URL = "https://data.cdc.gov/api/views/hk9y-quqm/rows.json";
         // Obtaining the API key is easy. The same key should be usable across the entire
         // data.gov developer network, i.e. all data sources on data.gov.
         // https://www.nps.gov/subjects/developer/get-started.htm
@@ -35,20 +35,20 @@ namespace DataGov_API_Intro.Controllers
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-            //string NATIONAL_PARK_API_PATH = BASE_URL + "/parks?limit=20";
+            string NATIONAL_PARK_API_PATH = BASE_URL + "/parks?limit=20";
             string parksData = "";
 
             Parks parks = null;
 
-            //httpClient.BaseAddress = new Uri(NATIONAL_PARK_API_PATH);
-            httpClient.BaseAddress = new Uri(BASE_URL);
+            httpClient.BaseAddress = new Uri(NATIONAL_PARK_API_PATH);
+            //httpClient.BaseAddress = new Uri(BASE_URL);
 
             try
             {
-                //HttpResponseMessage response = httpClient.GetAsync(NATIONAL_PARK_API_PATH)
-                //                                        .GetAwaiter().GetResult();
-                HttpResponseMessage response = httpClient.GetAsync(BASE_URL)
+                HttpResponseMessage response = httpClient.GetAsync(NATIONAL_PARK_API_PATH)
                                                         .GetAwaiter().GetResult();
+                //HttpResponseMessage response = httpClient.GetAsync(BASE_URL)
+                //                                        .GetAwaiter().GetResult();
 
 
 
