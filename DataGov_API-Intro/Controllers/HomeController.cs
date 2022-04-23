@@ -12,8 +12,8 @@ namespace DataGov_API_Intro.Controllers
     {
         HttpClient httpClient;
 
-        static string BASE_URL = "https://developer.nps.gov/api/v1";
-        static string API_KEY = "mdBybOievMdeX3eYSC0MhFu3U7xRV18xHAPG04qb"; //Add your API key here inside ""
+        static string BASE_URL = "https://api.ftc.gov/v0";
+        static string API_KEY = "haeV87u8y41GaQLUfqOTKyLx596euJAK3MFWbFap"; //Add your API key here inside ""
 
         //static string BASE_URL = "https://data.cdc.gov/api/views/hk9y-quqm/rows.json";
         // Obtaining the API key is easy. The same key should be usable across the entire
@@ -35,17 +35,19 @@ namespace DataGov_API_Intro.Controllers
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-            string NATIONAL_PARK_API_PATH = BASE_URL + "/parks?limit=20";
-            string parksData = "";
+            // string NATIONAL_PARK_API_PATH = BASE_URL + "/parks?limit=20";
+            string DNC_COMPLAINTS_API_PATH = BASE_URL + "/hsr-early-termination-notices";
+            JsonResult dncComplaintsData = null;
 
-            Parks parks = null;
+            // Parks parks = null;
+            DNCComplaints dncComplaints = null;
 
-            httpClient.BaseAddress = new Uri(NATIONAL_PARK_API_PATH);
+            httpClient.BaseAddress = new Uri(DNC_COMPLAINTS_API_PATH);
             //httpClient.BaseAddress = new Uri(BASE_URL);
 
             try
             {
-                HttpResponseMessage response = httpClient.GetAsync(NATIONAL_PARK_API_PATH)
+                HttpResponseMessage response = httpClient.GetAsync(DNC_COMPLAINTS_API_PATH)
                                                         .GetAwaiter().GetResult();
                 //HttpResponseMessage response = httpClient.GetAsync(BASE_URL)
                 //                                        .GetAwaiter().GetResult();
@@ -54,16 +56,16 @@ namespace DataGov_API_Intro.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    parksData = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    dncComplaintsData = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 }
 
-                if (!parksData.Equals(""))
+                if (!dncComplaintsData.Equals(""))
                 {
                     // JsonConvert is part of the NewtonSoft.Json Nuget package
-                    parks = JsonConvert.DeserializeObject<Parks>(parksData);
+                    dncComplaints = JsonConvert.DeserializeObject<DNCComplaints>(dncComplaintsData);
                 }
 
-                dbContext.Parks.Add(parks);
+                dbContext.DNCComplaints.Add(dncComplaints);
                 await dbContext.SaveChangesAsync();
             }
             catch (Exception e)
@@ -72,7 +74,7 @@ namespace DataGov_API_Intro.Controllers
                 Console.WriteLine(e.Message);
             }
 
-            return View(parks);
+            return View(dncComplaints);
         }
     }
 }

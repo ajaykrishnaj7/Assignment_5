@@ -30,4 +30,6 @@ namespace DataGov_API_Intro.Models
         public string latitude { get; set; }
         public Parks Parks { get; set; }
     }
+
+    
 }

@@ -10,5 +10,7 @@ namespace DataGov_API_Intro.DataAccess
 
         public DbSet<Parks> Parks { get; set; }
         public DbSet<Models.Park> Park { get; set; }
+
+        public DbSet<Models.DNCComplaints> DNCComplaints { get; set; }
     }
 }

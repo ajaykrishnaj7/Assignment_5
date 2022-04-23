@@ -1,4 +1,4 @@
-﻿@model DataGov_API_Intro.Models.Parks
+﻿@model DataGov_API_Intro.Models.DNCComplaints
 
 @{
   ViewData["Title"] = "Index";
@@ -6,9 +6,3 @@
 
 <h2>Index</h2>
 
-@foreach (DataGov_API_Intro.Models.Park park in Model.data)
-{
-<p>
-    @(park.parkCode + " " + park.fullName + " " + park.latLong)
-</p>
-}
