@@ -37,7 +37,7 @@ namespace DataGov_API_Intro.Controllers
 
             // string NATIONAL_PARK_API_PATH = BASE_URL + "/parks?limit=20";
             string DNC_COMPLAINTS_API_PATH = BASE_URL + "/hsr-early-termination-notices";
-            JsonResult dncComplaintsData = null;
+           JsonResult  dncComplaintsData = null;
 
             // Parks parks = null;
             DNCComplaints dncComplaints = null;
@@ -52,21 +52,34 @@ namespace DataGov_API_Intro.Controllers
                 //HttpResponseMessage response = httpClient.GetAsync(BASE_URL)
                 //                                        .GetAwaiter().GetResult();
 
-
+                string a = String.Empty;
 
                 if (response.IsSuccessStatusCode)
+
+
                 {
-                    dncComplaintsData = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                     a = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                    a = a.Replace("-", String.Empty);
+                   // dncComplaintsData = a ;
+
+                  
+
+
                 }
 
-                if (!dncComplaintsData.Equals(""))
+                if (!a.Equals(""))
                 {
                     // JsonConvert is part of the NewtonSoft.Json Nuget package
-                    dncComplaints = JsonConvert.DeserializeObject<DNCComplaints>(dncComplaintsData);
+                   var b = JsonConvert.DeserializeObject<D>(a);
+
+                    dbContext.DNCComplaints.AddRange(b.data);
+                    await dbContext.SaveChangesAsync();
+
                 }
 
-                dbContext.DNCComplaints.Add(dncComplaints);
-                await dbContext.SaveChangesAsync();
+                
             }
             catch (Exception e)
             {
@@ -95,46 +108,13 @@ public class Meta
 
 public class View
 {
-    public string id { get; set; }
-    public string name { get; set; }
-    public string assetType { get; set; }
-    public string attribution { get; set; }
-    public string attributionLink { get; set; }
-    public int averageRating { get; set; }
-    public string category { get; set; }
-    public int createdAt { get; set; }
-    public string description { get; set; }
-    public string displayType { get; set; }
-    public int downloadCount { get; set; }
-    public bool hideFromCatalog { get; set; }
-    public bool hideFromDataJson { get; set; }
-    public string licenseId { get; set; }
-    public bool newBackend { get; set; }
-    public int numberOfComments { get; set; }
-    public int oid { get; set; }
-    public string provenance { get; set; }
-    public bool publicationAppendEnabled { get; set; }
-    public int publicationDate { get; set; }
-    public int publicationGroup { get; set; }
-    public string publicationStage { get; set; }
-    public int rowsUpdatedAt { get; set; }
-    public string rowsUpdatedBy { get; set; }
-    public int tableId { get; set; }
-    public int totalTimesRated { get; set; }
-    public int viewCount { get; set; }
-    public int viewLastModified { get; set; }
-    public string viewType { get; set; }
-    public Approval[] approvals { get; set; }
-    public Column[] columns { get; set; }
-    public Grant[] grants { get; set; }
-    public License license { get; set; }
-    public Metadata metadata { get; set; }
-    public Owner owner { get; set; }
-    public Query query { get; set; }
-    public string[] rights { get; set; }
-    public Tableauthor tableAuthor { get; set; }
-    public string[] tags { get; set; }
-    public string[] flags { get; set; }
+    public string transaction_number { get; set; }
+    public string title { get; set; }
+    public string created { get; set; }
+    public string updated { get; set; }
+    public string acquiredparty { get; set; }
+    public int acquiringparty { get; set; }
+    
 }
 
 public class License
